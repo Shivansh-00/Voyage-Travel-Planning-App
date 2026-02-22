@@ -2,6 +2,165 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --brand: 109 91 255;          /* #6D5BFF */
+  --brand-light: 139 125 255;   /* lighter variant */
+  --accent-cyan: 34 211 238;
+  --accent-emerald: 52 211 153;
+  --accent-amber: 245 158 11;
+  --accent-rose: 244 63 94;
+  --surface-0: 2 6 23;
+  --surface-1: 15 23 42;
+  --surface-2: 30 41 59;
+  --surface-3: 51 65 85;
+  --text-primary: 241 245 249;
+  --text-secondary: 148 163 184;
+  --text-muted: 100 116 139;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+}
+
+/* ─── Base Layer ────────────────────────────────────────────── */
 body {
-  @apply bg-slate-950 text-slate-100;
+  @apply bg-[rgb(var(--surface-0))] text-[rgb(var(--text-primary))];
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Glass Card ────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(var(--surface-1), 0.6);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(var(--surface-3), 0.3);
+  border-radius: var(--radius);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card:hover {
+  border-color: rgba(var(--brand), 0.3);
+  box-shadow: 0 0 0 1px rgba(var(--brand), 0.1),
+              0 8px 32px rgba(var(--brand), 0.08);
+}
+
+/* ─── Gradient Accents ──────────────────────────────────────── */
+.gradient-brand {
+  background: linear-gradient(135deg, rgb(var(--brand)) 0%, rgb(var(--accent-cyan)) 100%);
+}
+.gradient-text {
+  background: linear-gradient(135deg, rgb(var(--brand)) 0%, rgb(var(--accent-cyan)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Shimmer Skeleton ──────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--surface-2), 0.4) 25%,
+    rgba(var(--surface-3), 0.5) 37%,
+    rgba(var(--surface-2), 0.4) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Pulse Glow ────────────────────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--brand), 0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(var(--brand), 0.2); }
+}
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(var(--surface-1), 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--surface-3), 0.8);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--brand), 0.5);
+}
+
+/* ─── Focus Ring ────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid rgb(var(--brand));
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ─── Button Base ───────────────────────────────────────────── */
+.btn-primary {
+  @apply relative overflow-hidden font-semibold transition-all duration-300;
+  background: linear-gradient(135deg, rgb(var(--brand)) 0%, rgb(var(--brand-light)) 100%);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 14px rgba(var(--brand), 0.35);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(var(--brand), 0.45);
+}
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(var(--brand), 0.3);
+}
+
+/* ─── Badge ─────────────────────────────────────────────────── */
+.badge {
+  @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium;
+  background: rgba(var(--surface-2), 0.8);
+  border: 1px solid rgba(var(--surface-3), 0.4);
+}
+.badge-brand { color: rgb(var(--brand)); border-color: rgba(var(--brand), 0.3); background: rgba(var(--brand), 0.1); }
+.badge-emerald { color: rgb(var(--accent-emerald)); border-color: rgba(var(--accent-emerald), 0.3); background: rgba(var(--accent-emerald), 0.1); }
+.badge-amber { color: rgb(var(--accent-amber)); border-color: rgba(var(--accent-amber), 0.3); background: rgba(var(--accent-amber), 0.1); }
+.badge-cyan { color: rgb(var(--accent-cyan)); border-color: rgba(var(--accent-cyan), 0.3); background: rgba(var(--accent-cyan), 0.1); }
+.badge-rose { color: rgb(var(--accent-rose)); border-color: rgba(var(--accent-rose), 0.3); background: rgba(var(--accent-rose), 0.1); }
+
+/* ─── Section Label ─────────────────────────────────────────── */
+.section-label {
+  @apply text-xs font-bold uppercase tracking-[0.15em];
+  color: rgb(var(--text-muted));
+}
+
+/* ─── Progress Bar ──────────────────────────────────────────── */
+.progress-bar {
+  @apply h-1.5 rounded-full overflow-hidden;
+  background: rgba(var(--surface-2), 0.6);
+}
+.progress-bar-fill {
+  @apply h-full rounded-full transition-all duration-500 ease-out;
+  background: linear-gradient(90deg, rgb(var(--brand)), rgb(var(--accent-cyan)));
+}
+
+/* ─── Leaflet Overrides ─────────────────────────────────────── */
+.leaflet-container {
+  background: rgb(var(--surface-0)) !important;
+  border-radius: var(--radius-sm);
+}
+.leaflet-popup-content-wrapper {
+  background: rgba(var(--surface-1), 0.95) !important;
+  color: rgb(var(--text-primary)) !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid rgba(var(--surface-3), 0.3) !important;
+  backdrop-filter: blur(12px);
+}
+.leaflet-popup-tip {
+  background: rgba(var(--surface-1), 0.95) !important;
 }

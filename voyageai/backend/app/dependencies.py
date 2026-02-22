@@ -10,6 +10,6 @@ def get_cache() -> RedisCache:
     return RedisCache(settings.redis_url)
 
 
-@lru_cache(maxsize=1)
 def get_travel_service() -> TravelService:
+    """Create a fresh TravelService each request (graph is lightweight)."""
     return TravelService(get_cache())
